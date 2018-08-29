@@ -1,0 +1,7 @@
+spring:
+
+ cloud:
+   aws:
+     region:
+       auto: false
+       static: us-east-1
