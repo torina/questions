@@ -1,7 +1,7 @@
-spring:
+#AWS
 
- cloud:
-   aws:
-     region:
-       auto: false
-       static: us-east-1
+cloud:
+ aws:
+   region:
+     auto: false
+     static: us-east-1
