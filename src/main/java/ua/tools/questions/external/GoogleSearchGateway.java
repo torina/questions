@@ -28,7 +28,7 @@ public class GoogleSearchGateway {
 
     @Value("${google.key}")
     private String key;
-    
+
     private RestTemplate restTemplate;
 
     GoogleSearchGateway(RestTemplate restTemplate) {
