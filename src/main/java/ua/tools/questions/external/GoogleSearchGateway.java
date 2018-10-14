@@ -28,13 +28,15 @@ public class GoogleSearchGateway {
 
     @Value("${google.key}")
     private String key;
+    
+    private RestTemplate restTemplate;
 
-    private
-    @Autowired
-    RestTemplate restTemplate;
+    GoogleSearchGateway(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     //TODO UnitTest
-    public ResponseEntity<Result> performSearch(String query) throws NoSuchMethodException {
+    public ResponseEntity<Result> performSearch(String query) {
         Map<String,String> params = new HashMap<>();
         params.put(CX_PARAM, se);
         params.put(KEY_PARAM, key);
