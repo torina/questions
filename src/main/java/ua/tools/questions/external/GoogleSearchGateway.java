@@ -78,12 +78,11 @@ public class GoogleSearchGateway {
         } catch ( Exception e) {
             System.err.println(e.getMessage());
         }
-//        if (res.getStatusCode().is2xxSuccessful()) {
+        if (res.getStatusCode().is2xxSuccessful()) {
             return Optional.ofNullable(res.getBody());
-//        } else {
-//            System.err.println(res);
-//            return Optional.empty();
-//        }
+        } else {
+            System.err.println(res);
+            return Optional.empty();
+        }
     }
-
 }
