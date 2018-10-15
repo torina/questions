@@ -1,21 +1,44 @@
-package ua.tools.questions;
+package ua.tools.questions.service;
 
+import com.google.api.services.customsearch.model.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ua.tools.questions.external.GoogleSearchGateway;
 //import org.telegram.telegrambots.meta.generics.WebhookBot;
 
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 //switch to webhook
 @Component
 @Slf4j
-public class QuestionBot extends TelegramLongPollingBot /*extends WebhookBot */{
+public class QuestionBot extends TelegramLongPollingBot /*extends WebhookBot */ {
 
+
+    @Autowired
+    private GoogleSearchGateway googleSearchGateway;
+
+    private String search(String q) {
+        Optional<Result> res = googleSearchGateway.performSearch(q);
+        if (res.isPresent()) {
+
+            try {
+                return res.get().toPrettyString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
+
+    }
 
     @Override
     public String getBotUsername() {
@@ -47,7 +70,7 @@ public class QuestionBot extends TelegramLongPollingBot /*extends WebhookBot */{
     public void onUpdatesReceived(List<Update> updates) {
         System.out.println("UPDATES!!!");
         // We check if the update has a message and the message has text
-        for(Update u: updates) {
+        for (Update u : updates) {
             onUpdateReceived(u);
         }
     }
